@@ -1,5 +1,4 @@
 import numpy as np
-from collections import Counter
 
 def get_pattern(block,block_size):
     pattern = np.zeros(8)
@@ -35,4 +34,6 @@ def lbp(input:np.ndarray,block_size=(10,10)):#int8 input with dim=2,edge around 
                 pattern = get_pattern(block,block_size)
                 feature.append(np.sum(pattern==-1))
                 feature.extend([np.sum(pattern==i) for i in uniform])
+                column_index+=block_size[1]
+            row_index += block_size[0]
         return np.array(feature)

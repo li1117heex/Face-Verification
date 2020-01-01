@@ -18,10 +18,11 @@ def get_pattern(block,block_size):
             if diff<=2:
                 feature.append(np.dot(pattern,[2**i for i in range(8)]))
             else:
-                feature.append(None)
-    return feature
+                feature.append(-1)
+    return np.array(feature)
 
 def lbp(input:np.ndarray,block_size=(10,10)):#int8 input with dim=2,edge around blocks is ignored
+    uniform=[0, 1, 2, 3, 4, 6, 7, 8, 12, 14, 15, 16, 24, 28, 30, 31, 32, 48, 56, 60, 62, 63, 64, 96, 112, 120, 124, 126, 127, 128, 129, 131, 135, 143, 159, 191, 192, 193, 195, 199, 207, 223, 224, 225, 227, 231, 239, 240, 241, 243, 247, 248, 249, 251, 252, 253, 254, 255]
     if input.ndim!=2:
         print("input dim!=2")
     else:
@@ -31,5 +32,7 @@ def lbp(input:np.ndarray,block_size=(10,10)):#int8 input with dim=2,edge around 
         while row_index+block_size[0]<=input.shape[0]:
             while column_index+block_size[1]<=input.shape[1]:
                 block = input[row_index:row_index+block_size[0],column_index:column_index+block_size[1]]
-                feature.append(Counter(get_pattern(block,block_size)).values())
-        return np.concatenate(feature,axis=0)
+                pattern = get_pattern(block,block_size)
+                feature.append(np.sum(pattern==-1))
+                feature.extend([np.sum(pattern==i) for i in uniform])
+        return np.array(feature)

@@ -26,9 +26,9 @@ def lbp(input:np.ndarray,block_size=(10,10)):#int8 input with dim=2,edge around 
         print("input dim!=2")
     else:
         row_index = 0
-        column_index = 0
         feature = []
         while row_index+block_size[0]<=input.shape[0]:
+            column_index = 0
             while column_index+block_size[1]<=input.shape[1]:
                 block = input[row_index:row_index+block_size[0],column_index:column_index+block_size[1]]
                 pattern = get_pattern(block,block_size)
@@ -37,3 +37,14 @@ def lbp(input:np.ndarray,block_size=(10,10)):#int8 input with dim=2,edge around 
                 column_index+=block_size[1]
             row_index += block_size[0]
         return np.array(feature)
+'''
+img = cv2.imread('home.jpg')
+gray= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+sift = cv2.SIFT()
+kp = sift.detect(gray,None)
+kp,des = sift.compute(gray,kp)
+'''
+'''dence=cv2.FeatureDetector_create("Dense")
+kp=dense.detect(gray)
+kp,des=sift.compute(imgGray,kp)'''
+#des is num of kp*128 matrix

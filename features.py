@@ -8,11 +8,11 @@ def get_pattern(block,block_size):
             pattern[0] = block[i - 1, j - 1] > block[i, j]
             pattern[1] = block[i - 1, j] > block[i, j]
             pattern[2] = block[i - 1, j + 1] > block[i, j]
-            pattern[3] = block[i, j - 1] > block[i, j]
-            pattern[4] = block[i, j + 1] > block[i, j]
-            pattern[5] = block[i + 1, j - 1] > block[i, j]
-            pattern[6] = block[i + 1, j] > block[i, j]
-            pattern[7] = block[i + 1, j + 1] > block[i, j]
+            pattern[3] = block[i, j + 1] > block[i, j]
+            pattern[4] = block[i + 1, j + 1] > block[i, j]
+            pattern[5] = block[i + 1, j ] > block[i, j]
+            pattern[6] = block[i + 1, j - 1] > block[i, j]
+            pattern[7] = block[i, j - 1] > block[i, j]
             diff = np.array([pattern[i-1]!=pattern[i] for i in range(8)]).sum()
             if diff<=2:
                 feature.append(np.dot(pattern,[2**i for i in range(8)]))
